@@ -14,15 +14,15 @@ best_buy = Store(product_list)
 
 def start(Store):
     """
-    Starts the interactive store menu where users can perform various actions such as:
-    - Listing all products in the store
-    - Displaying the total amount of products in the store
-    - Making an order
-    The function continuously prompts the user for input until they choose to quit.
-    :param Store: The store object that manages the products and their interactions.
-    :type Store: Store
-    :return: None
-    """
+        Starts the interactive store menu where users can perform various actions such as:
+        - Listing all products in the store
+        - Displaying the total amount of products in the store
+        - Making an order
+        The function continuously prompts the user for input until they choose to quit.
+        :param Store: The store object that manages the products and their interactions.
+        :type Store: Store
+        :return: None
+        """
     shopping_list = []
 
     while True:
