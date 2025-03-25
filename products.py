@@ -32,15 +32,21 @@ class Product:
         self.quantity = quantity
         self.active = True
 
+    def __str__(self):
+        """
+        Returns a user-friendly string representation of the product.
+        :return: A string that includes the product name and price
+        :rtype: str
+        """
+        return f"{self.name} (Price: {self.price:.2f}€)"
 
     def get_quantity(self) -> int:
         """
-        Function to return the quantity of a product
-        :return : quantity of the product
+        Returns the quantity of the product.
+        :return: Quantity of the product.
         :rtype: int
         """
         return self.quantity
-
 
     def set_quantity(self, quantity):
         """
@@ -50,58 +56,48 @@ class Product:
         :type quantity: int
         :raises ValueError: If quantity is not a non-negative integer.
         """
-        try:
-            if not isinstance(quantity, int) or quantity < 0:
-                raise ValueError("Invalid input: quantity should be a non-negative integer")
-            self.quantity = quantity
+        if not isinstance(quantity, int) or quantity < 0:
+            raise ValueError("Invalid input: quantity should be a non-negative integer")
+        self.quantity = quantity
 
-            if quantity == 0:
-                self.deactivate()
-
-        except ValueError as e:
-            print(f"Error: {e}")
-
+        if quantity == 0:
+            self.deactivate()
 
     def is_active(self) -> bool:
         """
-        Checks if the product is active
-        :return: True if the product is active, otherwise False
+        Checks if the product is active.
+        :return: True if the product is active, otherwise False.
         :rtype: bool
         """
         return self.active
 
-
     def activate(self):
         """
         Activates the product if it has more than 0 quantity.
-
-        :return: Prints a message indicating whether the product was activated.
+        :return: True if the product is successfully activated, otherwise False.
+        :rtype: bool
         """
         if self.quantity > 0:
             self.active = True
-            print("Product successfully activated!")
-        else:
-            print("The product you want to activate has 0 quantity")
-
+            return True
+        return False
 
     def deactivate(self):
         """
         Deactivates the product.
-
-        :return: Prints a message confirming the deactivation.
+        :return: True if the product was successfully deactivated.
+        :rtype: bool
         """
         self.active = False
-        print("Product successfully deactivated!")
-
+        return True
 
     def show(self) -> str:
         """
         Returns a formatted string with product details.
-        :return: A formatted string containing the product name, price and quantity
+        :return: A formatted string containing the product name, price, and quantity.
         :rtype: str
         """
         return f"{self.name}, Price: {self.price:.2f}, Quantity: {self.quantity}"
-
 
     def buy(self, quantity) -> float:
         """
