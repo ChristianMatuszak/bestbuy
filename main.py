@@ -61,6 +61,8 @@ def start(best_buy):
                     break
 
                 try:
+                    if product_choice == "0":
+                        raise ValueError(Fore.RED + "\nInvalid product number. Please try again." + Style.RESET_ALL)
                     product_index = int(product_choice) - 1
                     product = best_buy.get_all_products()[product_index]
                 except (ValueError, IndexError):
