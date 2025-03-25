@@ -3,6 +3,12 @@ from store import Store
 from products import Product
 
 def main():
+    """
+    Initializes the store with a default product list and starts the interactive store menu.
+    The menu allows users to view products, check store quantities, make orders, and quit the application.
+
+    :return: None
+    """
     product_list = [
         Product("MacBook Air M2", price=1450, quantity=100),
         Product("Bose QuietComfort Earbuds", price=250, quantity=500),
