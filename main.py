@@ -1,33 +1,33 @@
-import sys
 from colorama import Fore, Style
 from store import Store
 from products import Product
 
-product_list = [
-    Product("MacBook Air M2", price=1450, quantity=100),
-    Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-    Product("Google Pixel 7", price=500, quantity=250)
-]
+def main():
+    product_list = [
+        Product("MacBook Air M2", price=1450, quantity=100),
+        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+        Product("Google Pixel 7", price=500, quantity=250)
+    ]
 
-best_buy = Store(product_list)
+    best_buy = Store(product_list)
+    start(best_buy)
 
 
-def start(Store):
+def start(best_buy):
+    """"
+    Starts the interactive store menu where users can perform various actions such as:
+    - Listing all products in the store
+    - Displaying the total amount of products in the store
+    - Making an order by selecting products and specifying quantities
+    The function continuously prompts the user for input until they choose to quit.
+    :param best_buy: The store object that manages the products and their interactions.
+    :type best_buy: Store
+    :return: None
     """
-        Starts the interactive store menu where users can perform various actions such as:
-        - Listing all products in the store
-        - Displaying the total amount of products in the store
-        - Making an order
-        The function continuously prompts the user for input until they choose to quit.
-        :param Store: The store object that manages the products and their interactions.
-        :type Store: Store
-        :return: None
-        """
     shopping_list = []
-
     while True:
         print("\n           Store Menu          ")
-        print("\n          ------------         ")
+        print("          ------------         ")
         print(Fore.GREEN + "1. " + Style.RESET_ALL + "List all products in store")
         print(Fore.GREEN + "2. " + Style.RESET_ALL + "Show total amount in store")
         print(Fore.GREEN + "3. " + Style.RESET_ALL + "Make an order")
@@ -61,27 +61,31 @@ def start(Store):
                     print(Fore.RED + "\nInvalid product number. Please try again." + Style.RESET_ALL)
                     continue
 
-                quantity = input(f"\nWhat amount do you want? ")
+                quantity = input(f"\nWhat amount do you want for {product.name}? ")
 
                 try:
                     quantity = int(quantity)
+                    if quantity <= 0:
+                        print(Fore.RED + "\nQuantity must be a positive integer." + Style.RESET_ALL)
+                        continue
                 except ValueError:
                     print(Fore.RED + "\nPlease enter a valid quantity." + Style.RESET_ALL)
                     continue
 
-                if quantity <= 0:
-                    print(Fore.RED + "\nQuantity must be greater than zero. Please try again." + Style.RESET_ALL)
+                if quantity > product.quantity:
+                    print(Fore.RED + "\nNot enough stock available!" + Style.RESET_ALL)
+                    print(Fore.RED + f"Currently, there are {product.quantity} units available for {product.name}." + Style.RESET_ALL)
                     continue
 
                 shopping_list.append((product, quantity))
                 print(f"\nProduct added to list: {product.name} (x{quantity})")
 
             total_price = best_buy.order(shopping_list)
-            print(f"\nTotal price of the order: {total_price}")
+            print(f"\nTotal price of the order: " + Fore.GREEN + f"{total_price:.2f}€" + Style.RESET_ALL)
 
         elif user_choice == "4":
             print("\nBye!")
-            sys.exit()
+            return
 
         else:
             print(Fore.RED + "Invalid choice, please try again." + Style.RESET_ALL)
@@ -89,6 +93,6 @@ def start(Store):
 
 if __name__ == "__main__":
     try:
-        start(Store)
+        main()
     except KeyboardInterrupt:
         print(Fore.RED + "\nProgram terminated by user." + Style.RESET_ALL)
