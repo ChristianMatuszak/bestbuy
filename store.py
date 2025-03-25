@@ -32,24 +32,23 @@ class Store:
             raise ValueError("Invalid input: product must be an instance of the Product class")
 
         if product in self.products:
-            print("Product already in list.")
-            return
+            raise ValueError(f"Product {product} already in list.")
         self.products.append(product)
 
 
     def remove_product(self, product):
-        """
+        """"
         Checks if the product that needs to be removed is inside the list.
         And removes it if found
         :param product: the product to be removed
         :type product: Product
-        :return: Prints a confirmation message or an error if the product is not found.
+        :return: True if the product was successfully removed, False if not found.
+        :rtype: bool
         """
         if product in self.products:
             self.products.remove(product)
-            print(f"{product} was successfully removed")
-            return
-        print(f"There is no product with the name: {product} in list")
+            return True
+        return False
 
 
     def get_total_quantity(self) -> int:
